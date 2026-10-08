@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Real-time weather with smart travel and packing recommendations">
+  <title>Smart Weather &amp; Travel Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <h1>Smart <span>Weather</span> &amp; Travel</h1>
+
+      <!-- Search + geolocation -->
+      <form id="search-form" class="search" role="search">
+        <label for="city" class="sr-only">City name</label>
+        <input id="city" type="search" placeholder="Search a city, e.g. Chennai" autocomplete="off" required>
+        <button type="submit" class="btn">Search</button>
+        <button type="button" id="geo-btn" class="btn btn-ghost" title="Use my location">📍 My location</button>
+      </form>
+
+      <div class="toolbar">
+        <ul id="history" class="chips" aria-label="Recent searches"></ul>
+        <div class="unit-toggle" role="group" aria-label="Temperature unit">
+          <button type="button" data-unit="c" class="active" aria-pressed="true">°C</button>
+          <button type="button" data-unit="f" aria-pressed="false">°F</button>
+        </div>
+      </div>
+
+      <!-- Shown only when no API key is configured -->
+      <form id="key-form" class="banner" hidden>
+        <label for="api-key">Enter your free WeatherAPI.com key:</label>
+        <input id="api-key" type="text" placeholder="API key" required>
+        <button class="btn btn-small" type="submit">Save key</button>
+      </form>
+    </header>
+
+    <div id="loader" class="loader" hidden role="status"><span class="spinner"></span> Fetching weather…</div>
+
+    <main id="dashboard" hidden>
+      <section class="card current" aria-labelledby="loc-name">
+        <div class="current-main">
+          <div id="icon" class="icon" aria-hidden="true"></div>
+          <div>
+            <h2 id="loc-name"></h2>
+            <p id="loc-time" class="muted"></p>
+            <p class="temp"><span id="temp"></span></p>
+            <p id="condition" class="condition"></p>
+          </div>
+        </div>
+        <dl class="stats">
+          <div><dt>Humidity</dt><dd id="humidity"></dd></div>
+          <div><dt>Wind</dt><dd id="wind"></dd></div>
+          <div><dt>UV index</dt><dd id="uv"></dd></div>
+          <div><dt>Pressure</dt><dd id="pressure"></dd></div>
+        </dl>
+      </section>
+
+      <section class="card" aria-labelledby="rec-title">
+        <h2 id="rec-title">Travel recommendations</h2>
+        <div id="advisory"></div>
+        <div class="rec-grid" id="recs"></div>
+      </section>
+
+      <section aria-labelledby="fc-title">
+        <h2 id="fc-title">5-day forecast</h2>
+        <ul id="forecast" class="forecast"></ul>
+      </section>
+    </main>
+
+    <div id="toasts" class="toasts" aria-live="assertive"></div>
+  </div>
+</body>
+</html>
